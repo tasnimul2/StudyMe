@@ -1,10 +1,13 @@
 package com.mystudyapps.studyme;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    //when question is tapped, the answer is shown
     public void questionOnClick(View view){
         questionTV.setEnabled(false);
         questionTV.setVisibility(View.INVISIBLE);
@@ -22,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    //when the answer is tapped, the question is shown
     public void answerOnClick(View view){
         answerTV.setVisibility(View.INVISIBLE);
         answerTV.setEnabled(false);
@@ -32,6 +36,20 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public void optionOnClick(View view){
+
+        TextView text = (TextView) view;
+
+        if (text.getText().equals("option One")){
+            text.setBackground(ContextCompat.getDrawable(this,R.drawable.correct));
+        }else{
+            text.setBackground(ContextCompat.getDrawable(this,R.drawable.incorrect));
+        }
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
