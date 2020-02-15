@@ -5,5 +5,6 @@
     <string name="option_two">Option Two</string>
     <string name="option_one">option One</string>
     <string name="option_three">Option Three</string>
+    <string name="todo">TODO</string>
 
 </resources>

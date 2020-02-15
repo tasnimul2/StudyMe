@@ -11,7 +11,8 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView questionTV, answerTV;
+    TextView questionTV, answerTV , option1TV,option2TV,option3TV ;
+    boolean isShowingOptions = true;
 
 
 
@@ -49,6 +50,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void showOnclick(View view){
+
+        if(isShowingOptions) {
+            option1TV.setVisibility(View.INVISIBLE);
+            option2TV.setVisibility(View.INVISIBLE);
+            option3TV.setVisibility(View.INVISIBLE);
+            isShowingOptions = false;
+        }else {
+            option1TV.setVisibility(View.VISIBLE);
+            option2TV.setVisibility(View.VISIBLE);
+            option3TV.setVisibility(View.VISIBLE);
+            isShowingOptions = true;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
         questionTV = findViewById(R.id.questionTV);
         answerTV = findViewById(R.id.answerTV);
+        option1TV = findViewById(R.id.option1TV);
+        option2TV = findViewById(R.id.option2TV);
+        option3TV = findViewById(R.id.option3TV);
+
 
         answerTV.setVisibility(View.INVISIBLE);
         answerTV.setEnabled(false);

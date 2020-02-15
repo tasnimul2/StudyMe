@@ -50,16 +50,16 @@
         android:layout_height="50dp"
         android:background="@drawable/box3"
         android:gravity="center"
+        android:onClick="optionOnClick"
         android:text="@string/option_one"
         android:textAllCaps="true"
         android:textColor="#FAFAFA"
         android:textStyle="bold|italic"
-        android:onClick="optionOnClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionTV"
-        app:layout_constraintVertical_bias="0.41000003" />
+        app:layout_constraintVertical_bias="0.22000003" />
 
     <TextView
         android:id="@+id/option2TV"
@@ -95,5 +95,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/option2TV"
         app:layout_constraintVertical_bias="0.176" />
+
+    <ImageView
+        android:id="@+id/showIV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/todo"
+        android:onClick="showOnclick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/option3TV"
+        app:srcCompat="@android:drawable/ic_menu_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
