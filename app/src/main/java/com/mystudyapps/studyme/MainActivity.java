@@ -16,8 +16,8 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView questionTV, answerTV , option1TV,option2TV,option3TV ;
-    FloatingActionButton addCardBTN;
+    private TextView questionTV, answerTV , option1TV,option2TV,option3TV ;
+    private FloatingActionButton addCardBTN;
     boolean isShowingOptions = true;
 
 
