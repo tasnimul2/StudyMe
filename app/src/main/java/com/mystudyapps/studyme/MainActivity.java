@@ -3,19 +3,30 @@ package com.mystudyapps.studyme;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView questionTV, answerTV , option1TV,option2TV,option3TV ;
+    FloatingActionButton addCardBTN;
     boolean isShowingOptions = true;
 
 
 
+
+
+    //----------------------------------------------------------------------//
+    //                   BUTTON ON CLICK METHODS                           //
+    // ---------------------------------------------------------------------//
 
     //when question is tapped, the answer is shown
     public void questionOnClick(View view){
@@ -65,6 +76,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void addCardOnClick(View view){
+        Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         option1TV = findViewById(R.id.option1TV);
         option2TV = findViewById(R.id.option2TV);
         option3TV = findViewById(R.id.option3TV);
-
+        addCardBTN = findViewById(R.id.addCardBTN);
 
         answerTV.setVisibility(View.INVISIBLE);
         answerTV.setEnabled(false);
