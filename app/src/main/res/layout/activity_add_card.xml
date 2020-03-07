@@ -40,7 +40,7 @@
         app:layout_constraintVertical_bias="0.179" />
 
     <EditText
-        android:id="@+id/AnswerET"
+        android:id="@+id/answerET"
         android:layout_width="299dp"
         android:layout_height="108dp"
         android:autofillHints=""
@@ -62,6 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:onClick="saveCardOnClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.107"

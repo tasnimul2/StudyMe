@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //users answer options
     public void optionOnClick(View view){
 
         TextView text = (TextView) view;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //onclick method for the show / hide answer toggle
     public void showOnclick(View view){
 
         if(isShowingOptions) {
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //onclick method for adding a new card.
     public void addCardOnClick(View view){
         Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
         startActivity(intent);
@@ -93,8 +96,13 @@ public class MainActivity extends AppCompatActivity {
         option2TV = findViewById(R.id.option2TV);
         option3TV = findViewById(R.id.option3TV);
         addCardBTN = findViewById(R.id.addCardBTN);
-
         answerTV.setVisibility(View.INVISIBLE);
         answerTV.setEnabled(false);
+
+
+
+        //when returned from the add card activity with data
+        questionTV.setText(getIntent().getStringExtra("QUESTION"));
+        answerTV.setText(getIntent().getStringExtra("ANSWER"));
     }
 }
