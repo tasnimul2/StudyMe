@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     //onclick method for adding a new card.
     public void addCardOnClick(View view){
         Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,100);
     }
 
     @Override
@@ -100,9 +100,20 @@ public class MainActivity extends AppCompatActivity {
         answerTV.setEnabled(false);
 
 
-
-        //when returned from the add card activity with data
-        questionTV.setText(getIntent().getStringExtra("QUESTION"));
-        answerTV.setText(getIntent().getStringExtra("ANSWER"));
     }
+
+
+    //onActivityResult method checks for the request code that was sent to AddCardActivity.class, checks for the
+    //result code sent back from AddCardActivity.class as well as the data. Then it sets the value of questionTV and answerTV
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == 100 && resultCode == RESULT_OK){
+            String question = data.getExtras().getString("QUESTION");
+            String answer = data.getExtras().getString("ANSWER");
+            questionTV.setText(question);
+            answerTV.setText(answer);
+        }
+    }
+
+
 }

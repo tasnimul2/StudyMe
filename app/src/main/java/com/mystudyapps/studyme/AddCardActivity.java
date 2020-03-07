@@ -16,17 +16,33 @@ public class AddCardActivity extends AppCompatActivity {
     EditText questionET,answerET;
 
 
+    //----------------------------------------------------------------------//
+    //                   BUTTON ON CLICK METHODS                           //
+    // ---------------------------------------------------------------------//
+
+    //removeCardOnClick method closes the add card activity
     public void removeCardOnClick(View view ){
         finish();
     }
+
+    /*
+    saveCardOnClick method :
+    1) takes user input from edit texts and assigns it to question and answer variable
+    2) creates a new intent that stores the user input
+    3) the user's input data it put inside the setResult method and sent back to MainActivty
+    4) ends the AddCard activity
+
+     */
     public void saveCardOnClick(View view){
+
         String question = questionET.getText().toString();
         String answer = answerET.getText().toString();
 
-        Intent intent = new Intent(AddCardActivity.this,MainActivity.class);
-        intent.putExtra("QUESTION",question);
-        intent.putExtra("ANSWER",answer);
-        startActivity(intent);
+        Intent data = new Intent();
+        data.putExtra("QUESTION", question);
+        data.putExtra("ANSWER",answer);
+        setResult(RESULT_OK,data);
+        finish();
     }
 
     @Override
