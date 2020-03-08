@@ -1,24 +1,32 @@
 package com.mystudyapps.studyme;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.w3c.dom.Text;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView questionTV, answerTV , option1TV,option2TV,option3TV ;
     private FloatingActionButton addCardBTN;
     boolean isShowingOptions = true;
+    int currentCardIndex = 0;
+
+    // instance of the FlashcardDatabase database so that we can read / write to it
+    FlashcardDatabase flashcardDatabase;
+    //list to hold all of the flash cards
+    List<Flashcard> allFlashcards;
+
+
+
+
 
 
 
@@ -84,6 +92,32 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent,100);
     }
 
+    //shows user the next card
+    public void nextCardOnClick(View view){
+        //if we pass the last card, go back to the beginning
+        ++currentCardIndex;
+        if (currentCardIndex > allFlashcards.size() - 1) {
+            currentCardIndex = 0;
+        }
+
+        //show the card
+        questionTV.setText(allFlashcards.get(currentCardIndex).getQuestion());
+        answerTV.setText(allFlashcards.get(currentCardIndex).getAnswer());
+
+    }
+
+    public void previousCardOnClick(View view){
+        --currentCardIndex;
+        //if we pass the first card, loop around  to the end
+        if(currentCardIndex < 0){
+            currentCardIndex = allFlashcards.size() - 1;
+        }
+
+        //show the card
+        questionTV.setText(allFlashcards.get(currentCardIndex).getQuestion());
+        answerTV.setText(allFlashcards.get(currentCardIndex).getAnswer());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +134,24 @@ public class MainActivity extends AppCompatActivity {
         answerTV.setEnabled(false);
 
 
+        /*
+        initialize our local flashcardDatabase variable. We have to do this inside onCreate()
+        because getApplicationContext() will return null if the app hasn't initialized yet.
+        And in onCreate() we can guarantee that the app has been initialized
+        */
+        flashcardDatabase = new FlashcardDatabase(getApplicationContext());
+
+        //access the available flashcards once the app opens up
+        allFlashcards = flashcardDatabase.getAllCards();
+
+
+        //if the flashcard list is not empty, display the very first card once the app opens up
+        if (allFlashcards != null && allFlashcards.size() > 0) {
+
+            questionTV.setText(allFlashcards.get(0).getQuestion());
+            answerTV.setText(allFlashcards.get(0).getAnswer());
+        }
+
     }
 
 
@@ -112,6 +164,14 @@ public class MainActivity extends AppCompatActivity {
             String answer = data.getExtras().getString("ANSWER");
             questionTV.setText(question);
             answerTV.setText(answer);
+
+            //insertCard method allows us to save our card data
+            flashcardDatabase.insertCard(new Flashcard(question, answer));
+
+            //update the local variable holding the list of flashcards
+            allFlashcards = flashcardDatabase.getAllCards();
+
+
         }
     }
 
