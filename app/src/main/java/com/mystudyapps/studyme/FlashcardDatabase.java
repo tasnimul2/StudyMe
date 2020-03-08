@@ -6,6 +6,8 @@ import androidx.room.Room;
 
 import java.util.List;
 
+//This is an extra class created to easily interact with the database with helper functions that use FlashcardDao directly.
+
 public class FlashcardDatabase {
     private final AppDatabase db;
 

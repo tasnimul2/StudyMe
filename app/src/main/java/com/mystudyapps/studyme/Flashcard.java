@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.UUID;
 
+//This class defines objects that we put in the database. For every field in Flashcard, a column is created in the database
 @Entity
 public class Flashcard {
 
