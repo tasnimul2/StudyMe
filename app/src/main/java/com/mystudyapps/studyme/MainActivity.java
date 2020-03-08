@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -16,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView questionTV, answerTV , option1TV,option2TV,option3TV ;
     private FloatingActionButton addCardBTN;
-    boolean isShowingOptions = true;
+    boolean isShowingOptions = true , isQuestionShowing = false, isAnswerShowing = false;
     int currentCardIndex = 0;
 
     // instance of the FlashcardDatabase database so that we can read / write to it
@@ -26,10 +27,31 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    //----------------------------------------------------------------------//
+    //                           HELPER METHODS                            //
+    // ---------------------------------------------------------------------//
 
+    public void showAnswer(){
+        questionTV.setEnabled(false);
+        questionTV.setVisibility(View.INVISIBLE);
 
+        answerTV.setVisibility(View.VISIBLE);
+        answerTV.setEnabled(true);
 
+        isQuestionShowing = true;
+        isAnswerShowing = false;
+    }
 
+    public void showQuestion(){
+        answerTV.setVisibility(View.INVISIBLE);
+        answerTV.setEnabled(false);
+
+        questionTV.setEnabled(true);
+        questionTV.setVisibility(View.VISIBLE);
+
+        isQuestionShowing = false;
+        isAnswerShowing = true;
+    }
 
 
     //----------------------------------------------------------------------//
@@ -38,23 +60,12 @@ public class MainActivity extends AppCompatActivity {
 
     //when question is tapped, the answer is shown
     public void questionOnClick(View view){
-        questionTV.setEnabled(false);
-        questionTV.setVisibility(View.INVISIBLE);
-
-        answerTV.setVisibility(View.VISIBLE);
-        answerTV.setEnabled(true);
-
+        showAnswer();
     }
 
     //when the answer is tapped, the question is shown
     public void answerOnClick(View view){
-        answerTV.setVisibility(View.INVISIBLE);
-        answerTV.setEnabled(false);
-
-        questionTV.setEnabled(true);
-        questionTV.setVisibility(View.VISIBLE);
-
-
+        showQuestion();
     }
 
     //users answer options
@@ -72,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
 
     //onclick method for the show / hide answer toggle
     public void showOnclick(View view){
-
         if(isShowingOptions) {
             option1TV.setVisibility(View.INVISIBLE);
             option2TV.setVisibility(View.INVISIBLE);
@@ -94,28 +104,43 @@ public class MainActivity extends AppCompatActivity {
 
     //shows user the next card
     public void nextCardOnClick(View view){
-        //if we pass the last card, go back to the beginning
-        ++currentCardIndex;
-        if (currentCardIndex > allFlashcards.size() - 1) {
-            currentCardIndex = 0;
-        }
+        showQuestion();
+        if(allFlashcards.isEmpty()){
+            Toast.makeText(MainActivity.this,"MUST ADD A CARD FIRST", Toast.LENGTH_LONG).show();
+        }else {
+            //if we pass the last card, go back to the beginning
+            ++currentCardIndex;
 
-        //show the card
-        questionTV.setText(allFlashcards.get(currentCardIndex).getQuestion());
-        answerTV.setText(allFlashcards.get(currentCardIndex).getAnswer());
+            if (currentCardIndex > allFlashcards.size() - 1) {
+                currentCardIndex = 0;
+            }
+
+
+            //show the card
+            questionTV.setText(allFlashcards.get(currentCardIndex).getQuestion());
+            answerTV.setText(allFlashcards.get(currentCardIndex).getAnswer());
+        }
 
     }
 
     public void previousCardOnClick(View view){
-        --currentCardIndex;
-        //if we pass the first card, loop around  to the end
-        if(currentCardIndex < 0){
-            currentCardIndex = allFlashcards.size() - 1;
+        showQuestion();
+        if(allFlashcards.isEmpty()){
+            Toast.makeText(MainActivity.this,"MUST ADD A CARD FIRST", Toast.LENGTH_LONG).show();
+        }else {
+            --currentCardIndex;
+
+            //if we pass the first card, loop around  to the end
+            if (currentCardIndex < 0) {
+                currentCardIndex = allFlashcards.size() - 1;
+            }
+
+
+            //show the card
+            questionTV.setText(allFlashcards.get(currentCardIndex).getQuestion());
+            answerTV.setText(allFlashcards.get(currentCardIndex).getAnswer());
         }
 
-        //show the card
-        questionTV.setText(allFlashcards.get(currentCardIndex).getQuestion());
-        answerTV.setText(allFlashcards.get(currentCardIndex).getAnswer());
     }
 
     @Override
