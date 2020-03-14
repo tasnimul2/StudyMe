@@ -8,7 +8,7 @@ Flashcard app to help students study
 
 ### App Walk-though
 
-<img src="https://i.imgur.com/tnRXTdA.gif" width=200><br>
+<img src="https://i.imgur.com/8upnEwG.gif" width=200><br>
 
 
 ## Required
