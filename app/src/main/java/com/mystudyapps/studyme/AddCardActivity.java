@@ -1,11 +1,11 @@
 package com.mystudyapps.studyme;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -49,6 +49,7 @@ public class AddCardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_card);
+        getSupportActionBar().setTitle("ADD A CARD");
 
         removeCardBTN = findViewById(R.id.removeCard);
         saveBTN = findViewById(R.id.saveBTN);
