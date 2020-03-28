@@ -3,6 +3,8 @@ package com.mystudyapps.studyme;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     FlashcardDatabase flashcardDatabase;
     //list to hold all of the flash cards
     List<Flashcard> allFlashcards;
+
+    Animation leftOutAnim , rightInAnim;
 
 
     //----------------------------------------------------------------------//
@@ -123,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     public void addCardOnClick(View view) {
         Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
         startActivityForResult(intent, 100);
-        overridePendingTransition(R.anim.right_in, R.anim.left_in); /*For overridePendingTransition the first parameter is the "enter" animation
+        overridePendingTransition(R.anim.right_in, R.anim.left_out); /*For overridePendingTransition the first parameter is the "enter" animation
                                                                      for the new launched activity and the second is the "exit"
                                                                      animation for the current activity we're leaving. */
     }
@@ -143,10 +147,37 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-            //show the card
-            questionTV.setText(allFlashcards.get(currentCardIndex).getQuestion());
-            answerTV.setText(allFlashcards.get(currentCardIndex).getAnswer());
+            //animate sliding action when next button is pressed
+
+            final Animation leftOutAnim = AnimationUtils.loadAnimation(this, R.anim.left_out);
+            final Animation  rightInAnim = AnimationUtils.loadAnimation(this, R.anim.right_in);
+            questionTV.startAnimation(leftOutAnim);
+            leftOutAnim.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    // this method is called when the animation first starts
+                    showQuestion();
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    // this method is called when the animation is finished playing
+                    questionTV.startAnimation(rightInAnim);
+                    //show the card
+                    questionTV.setText(allFlashcards.get(currentCardIndex).getQuestion());
+                    answerTV.setText(allFlashcards.get(currentCardIndex).getAnswer());
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                    // we don't need to worry about this method
+                }
+            });
+
+
+
         }
+
 
     }
 
@@ -164,18 +195,45 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-            //show the card
-            questionTV.setText(allFlashcards.get(currentCardIndex).getQuestion());
-            answerTV.setText(allFlashcards.get(currentCardIndex).getAnswer());
+            //do a sliding animation
+            final Animation leftOutAnim = AnimationUtils.loadAnimation(this, R.anim.left_out);
+            final Animation  rightInAnim = AnimationUtils.loadAnimation(this, R.anim.right_in);
+            questionTV.startAnimation(leftOutAnim);
+            leftOutAnim.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    // this method is called when the animation first starts
+                    showQuestion();
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    // this method is called when the animation is finished playing
+                    questionTV.startAnimation(rightInAnim);
+                    //show the card
+                    questionTV.setText(allFlashcards.get(currentCardIndex).getQuestion());
+                    answerTV.setText(allFlashcards.get(currentCardIndex).getAnswer());
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                    // we don't need to worry about this method
+                }
+            });
+
         }
 
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
+
+
+
 
 
         questionTV = findViewById(R.id.questionTV);
