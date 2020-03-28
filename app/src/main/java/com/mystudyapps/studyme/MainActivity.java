@@ -57,22 +57,38 @@ public class MainActivity extends AppCompatActivity {
 
     //when question is tapped, the answer is shown
     public void questionOnClick(View view) {
-        showAnswer();
-        answerTV.animate().rotationYBy(360).setDuration(700).start();
+
+        questionTV.animate().rotationY(90).setDuration(200).withEndAction(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        showAnswer();
+                        // second quarter turn
+                        answerTV.setRotationY(-90);
+                        answerTV.animate().rotationY(0).setDuration(200).start();
+                    }
+                }
+        ).start();
+        questionTV.setCameraDistance(25000);
         answerTV.setCameraDistance(25000);
-
-
-
     }
 
     //when the answer is tapped, the question is shown
     public void answerOnClick(View view) {
-        showQuestion();
-        questionTV.animate().rotationYBy(360).setDuration(700).start();
+
+        answerTV.animate().rotationY(90).setDuration(200).withEndAction(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        showQuestion();
+                        // second quarter turn
+                        questionTV.setRotationY(-90);
+                       questionTV.animate().rotationY(0).setDuration(200).start();
+                    }
+                }
+        ).start();
+        answerTV.setCameraDistance(25000);
         questionTV.setCameraDistance(25000);
-
-
-
     }
 
     //users answer options
@@ -114,7 +130,8 @@ public class MainActivity extends AppCompatActivity {
 
     //shows user the next card
     public void nextCardOnClick(View view) {
-        //showQuestion();
+        questionTV.setRotationY(0);
+        showQuestion();
         if (allFlashcards.isEmpty()) {
             Toast.makeText(MainActivity.this, "MUST ADD A CARD FIRST", Toast.LENGTH_LONG).show();
         } else {
@@ -134,7 +151,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void previousCardOnClick(View view) {
-        //showQuestion();
+        questionTV.setRotationY(0);
+        showQuestion();
         if (allFlashcards.isEmpty()) {
             Toast.makeText(MainActivity.this, "MUST ADD A CARD FIRST", Toast.LENGTH_LONG).show();
         } else {
