@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //onclick method for the show / hide answer toggle
-    public void showOnclick(View view){
+    public void showToggleOnclick(View view){
         if(isShowingOptions) {
             option1TV.setVisibility(View.INVISIBLE);
             option2TV.setVisibility(View.INVISIBLE);
@@ -100,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
     public void addCardOnClick(View view){
         Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
         startActivityForResult(intent,100);
+        overridePendingTransition(R.anim.right_in,R.anim.left_in); /*For overridePendingTransition the first parameter is the "enter" animation
+                                                                     for the new launched activity and the second is the "exit"
+                                                                     animation for the current activity we're leaving. */
     }
 
     //shows user the next card

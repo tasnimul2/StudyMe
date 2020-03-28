@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/linear_interpolator">
+    <translate
+        android:fromXDelta="100%p"
+        android:toXDelta="0"
+        android:duration="400"/>
+</set>
+
+    <!-- 100%p means the Activity should start at a position equal to the full width of the window.
+     Duration is defined in milliseconds. So with this set of instructions played together,
+      this animation takes a view and animates it in from the right (100%p to 0) in < half
+      a second (400 milliseconds).-->
