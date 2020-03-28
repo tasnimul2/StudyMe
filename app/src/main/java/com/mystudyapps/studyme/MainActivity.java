@@ -15,9 +15,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView questionTV, answerTV , option1TV,option2TV,option3TV ;
+    private TextView questionTV, answerTV, option1TV, option2TV, option3TV;
     private FloatingActionButton addCardBTN;
-    boolean isShowingOptions = true , isQuestionShowing = false, isAnswerShowing = false;
+    boolean isShowingOptions = true, isQuestionShowing = false, isAnswerShowing = false;
     int currentCardIndex = 0;
 
     // instance of the FlashcardDatabase database so that we can read / write to it
@@ -26,29 +26,26 @@ public class MainActivity extends AppCompatActivity {
     List<Flashcard> allFlashcards;
 
 
-
     //----------------------------------------------------------------------//
     //                           HELPER METHODS                            //
     // ---------------------------------------------------------------------//
 
-    public void showAnswer(){
-        questionTV.setEnabled(false);
+    public void showAnswer() {
         questionTV.setVisibility(View.INVISIBLE);
+        questionTV.setEnabled(false);
 
-        answerTV.setVisibility(View.VISIBLE);
         answerTV.setEnabled(true);
-
+        answerTV.setVisibility(View.VISIBLE);
         isQuestionShowing = true;
         isAnswerShowing = false;
     }
 
-    public void showQuestion(){
+    public void showQuestion() {
         answerTV.setVisibility(View.INVISIBLE);
         answerTV.setEnabled(false);
 
         questionTV.setEnabled(true);
         questionTV.setVisibility(View.VISIBLE);
-
         isQuestionShowing = false;
         isAnswerShowing = true;
     }
@@ -59,36 +56,46 @@ public class MainActivity extends AppCompatActivity {
     // ---------------------------------------------------------------------//
 
     //when question is tapped, the answer is shown
-    public void questionOnClick(View view){
+    public void questionOnClick(View view) {
         showAnswer();
+        answerTV.animate().rotationYBy(360).setDuration(700).start();
+        answerTV.setCameraDistance(25000);
+
+
+
     }
 
     //when the answer is tapped, the question is shown
-    public void answerOnClick(View view){
+    public void answerOnClick(View view) {
         showQuestion();
+        questionTV.animate().rotationYBy(360).setDuration(700).start();
+        questionTV.setCameraDistance(25000);
+
+
+
     }
 
     //users answer options
-    public void optionOnClick(View view){
+    public void optionOnClick(View view) {
 
         TextView text = (TextView) view;
 
-        if (text.getText().equals("option One")){
-            text.setBackground(ContextCompat.getDrawable(this,R.drawable.correct));
-        }else{
-            text.setBackground(ContextCompat.getDrawable(this,R.drawable.incorrect));
+        if (text.getText().equals("option One")) {
+            text.setBackground(ContextCompat.getDrawable(this, R.drawable.correct));
+        } else {
+            text.setBackground(ContextCompat.getDrawable(this, R.drawable.incorrect));
         }
 
     }
 
     //onclick method for the show / hide answer toggle
-    public void showToggleOnclick(View view){
-        if(isShowingOptions) {
+    public void showToggleOnclick(View view) {
+        if (isShowingOptions) {
             option1TV.setVisibility(View.INVISIBLE);
             option2TV.setVisibility(View.INVISIBLE);
             option3TV.setVisibility(View.INVISIBLE);
             isShowingOptions = false;
-        }else {
+        } else {
             option1TV.setVisibility(View.VISIBLE);
             option2TV.setVisibility(View.VISIBLE);
             option3TV.setVisibility(View.VISIBLE);
@@ -97,20 +104,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //onclick method for adding a new card.
-    public void addCardOnClick(View view){
+    public void addCardOnClick(View view) {
         Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
-        startActivityForResult(intent,100);
-        overridePendingTransition(R.anim.right_in,R.anim.left_in); /*For overridePendingTransition the first parameter is the "enter" animation
+        startActivityForResult(intent, 100);
+        overridePendingTransition(R.anim.right_in, R.anim.left_in); /*For overridePendingTransition the first parameter is the "enter" animation
                                                                      for the new launched activity and the second is the "exit"
                                                                      animation for the current activity we're leaving. */
     }
 
     //shows user the next card
-    public void nextCardOnClick(View view){
-        showQuestion();
-        if(allFlashcards.isEmpty()){
-            Toast.makeText(MainActivity.this,"MUST ADD A CARD FIRST", Toast.LENGTH_LONG).show();
-        }else {
+    public void nextCardOnClick(View view) {
+        //showQuestion();
+        if (allFlashcards.isEmpty()) {
+            Toast.makeText(MainActivity.this, "MUST ADD A CARD FIRST", Toast.LENGTH_LONG).show();
+        } else {
             //if we pass the last card, go back to the beginning
             ++currentCardIndex;
 
@@ -126,11 +133,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void previousCardOnClick(View view){
-        showQuestion();
-        if(allFlashcards.isEmpty()){
-            Toast.makeText(MainActivity.this,"MUST ADD A CARD FIRST", Toast.LENGTH_LONG).show();
-        }else {
+    public void previousCardOnClick(View view) {
+        //showQuestion();
+        if (allFlashcards.isEmpty()) {
+            Toast.makeText(MainActivity.this, "MUST ADD A CARD FIRST", Toast.LENGTH_LONG).show();
+        } else {
             --currentCardIndex;
 
             //if we pass the first card, loop around  to the end
@@ -187,8 +194,8 @@ public class MainActivity extends AppCompatActivity {
     //onActivityResult method checks for the request code that was sent to AddCardActivity.class, checks for the
     //result code sent back from AddCardActivity.class as well as the data. Then it sets the value of questionTV and answerTV
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(requestCode == 100 && resultCode == RESULT_OK){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 100 && resultCode == RESULT_OK) {
             String question = data.getExtras().getString("QUESTION");
             String answer = data.getExtras().getString("ANSWER");
             questionTV.setText(question);
